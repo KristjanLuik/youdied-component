@@ -1,48 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import YouDiedOverlay from '../YouDied';
-
-export const YouDied = {
-  args: {
-    text: 'YOU DIED',
-    isVisible: true,
-  },
-};
-
-export const VictoryAchieved = {
-  args: {
-    text: 'VICTORY ACHIEVED',
-    isVisible: true,
-    displayDuration: 3000,
-  },
-};
-
-export const PrepareToDie = {
-  args: {
-    text: 'PREPARE TO DIE',
-    isVisible: false,
-  },
-};
+import YouDiedOverlay from '../src/YouDied';
 
 const meta = {
   title: 'YouDiedOverlay',
   component: YouDiedOverlay,
+  parameters: {
+    layout: 'fullscreen',
+    controls: {
+      hideNoControlsWarning: true,
+    },
+  },
 } satisfies Meta<typeof YouDiedOverlay>;
 
 export default meta;
 
-export const TimedDemo = () => {
-  const [showText, setShowText] = useState(false);
-
+export const EatPie: React.FC = () => {
+  const [show, setShow] = useState(false);
   useEffect(() => {
-    const timer = setTimeout(() => setShowText(true), 1000);
-    return () => clearTimeout(timer);
-  }, []);
+    if (!show) return;
+    const t = setTimeout(() => setShow(false), 2500);
+    return () => clearTimeout(t);
+  }, [show]);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-black">
-      <h2 className="text-gray-400">Timed Demo: Overlay will appear in 1 second.</h2>
-      <YouDiedOverlay text="ENEMY SLAIN" isVisible={showText} displayDuration={1500} />
+    <div className="min-h-screen bg-neutral-900 text-neutral-100 grid place-items-center p-8">
+      <button
+        onClick={() => setShow(true)}
+        className="pointer-events-auto px-5 py-3 rounded-2xl bg-neutral-100 text-neutral-900 font-medium shadow hover:shadow-lg transition text-red-300"
+      >
+        Trigger Overlay
+      </button>
+
+      <YouDiedOverlay text="EAT PIE" show={show} fontFamily="Cinzel, serif" />
+    </div>
+  );
+};
+
+export const YouDied: React.FC = () => {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (!show) return;
+    const t = setTimeout(() => setShow(false), 2500);
+    return () => clearTimeout(t);
+  }, [show]);
+
+  return (
+    <div className="min-h-screen bg-neutral-900 text-neutral-100 grid place-items-center p-8">
+      <button
+        onClick={() => setShow(true)}
+        className="pointer-events-auto px-5 py-3 rounded-2xl bg-neutral-100 text-neutral-900 font-medium shadow hover:shadow-lg transition text-red-300"
+      >
+        Trigger Overlay
+      </button>
+
+      <YouDiedOverlay text="YOU DIED" show={show} fontFamily="Cinzel, serif" />
     </div>
   );
 };
