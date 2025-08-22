@@ -39,6 +39,7 @@
     "rollup-plugin-dts": "^6.2.3",
     "storybook": "^9.1.2",
     "tailwindcss": "^4.1.12",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3"
   }
 }
